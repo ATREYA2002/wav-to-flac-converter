@@ -136,9 +136,9 @@ docker push pranidock/wav-to-flac-converter
 Create Kubernetes configuration files:
 
 1. **Deployment:** `deployment.yaml` for setting up application replicas.
-2. ![image](https://github.com/user-attachments/assets/9e3d70cb-8638-4071-9aff-6e3fe56be7f1)
+   ![image](https://github.com/user-attachments/assets/9e3d70cb-8638-4071-9aff-6e3fe56be7f1)
 
-3. **Service:** `service.yaml` to expose the WebSocket service.
+2. **Service:** `service.yaml` to expose the WebSocket service.
    ![image](https://github.com/user-attachments/assets/b49f9b12-29d7-448e-a69b-50a4e486b8b0)
 
 
