@@ -1,9 +1,6 @@
 
 # WAV to FLAC Converter Service
 
-This project provides a real-time, WebSocket-based service to convert WAV files to FLAC format. It's designed for streaming and lossless audio conversion, making it suitable for high-fidelity applications.
-
-
 ## Overview
 
 This service allows users to upload WAV files, converts them to FLAC format, and streams the output back over WebSocket. The project leverages Go and the Gin framework for routing and WebSocket handling. A Docker container and Kubernetes configurations are included to simplify deployment and scalability.
