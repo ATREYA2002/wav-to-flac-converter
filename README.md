@@ -95,6 +95,8 @@ Navigate to your project directory and start the application:
 cd ~/wav-to-flac-converter
 go run main.go
 ```
+![image](https://github.com/user-attachments/assets/513b9f8c-5683-4b37-b91e-006d48d5ca59)
+
 
 The server will run on `http://localhost:8080`.
 
@@ -105,6 +107,8 @@ In a second terminal, navigate to the project directory and run tests:
 cd ~/wav-to-flac-converter
 go test -v ./tests
 ```
+![image](https://github.com/user-attachments/assets/6c86c575-795d-430b-879e-5d9f4970d43a)
+
 
 ### Step 4: Access the Converter Interface
 Open a browser and navigate to `http://localhost:8080`. Upload a WAV file and test the conversion.
@@ -123,6 +127,10 @@ docker login
 docker build -t pranidock/wav-to-flac-converter .
 docker push pranidock/wav-to-flac-converter
 ```
+![image](https://github.com/user-attachments/assets/c9a1bb1d-9f55-4095-8e83-596b1d271f0e) 
+//build docker image
+![image](https://github.com/user-attachments/assets/5b247050-93c9-412a-b93a-09e62d03ffe6)
+//push docker image to docker desktop
 
 ### Step 2: Kubernetes Deployment
 Create Kubernetes configuration files:
