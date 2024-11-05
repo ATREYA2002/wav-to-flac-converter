@@ -1,6 +1,5 @@
 # wav-to-flac-converter
 The WAV to FLAC converter project is a real-time backend service built in Go that converts WAV audio files to FLAC format
-![image](https://github.com/user-attachments/assets/af141bad-fa9c-4291-80d5-590510aad9fb)
 
 
 
