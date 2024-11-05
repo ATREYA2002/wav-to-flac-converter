@@ -167,6 +167,8 @@ Get the external IP:
 ```bash
 kubectl get services
 ```
+![image](https://github.com/user-attachments/assets/6db294b9-5e25-4e0b-a6bc-412431463c99)
+
 
 Open your browser and enter the IP address (e.g., `http://4.157.225.49`) to access the service.
 
