@@ -17,6 +17,8 @@ cd wav-to-flac-converter
 ---
 
 ## Functionality Breakdown
+![image](https://github.com/user-attachments/assets/6b24cec1-4afe-45c9-8284-6966237e9a55)
+
 
 ### `main.go`
 - **Purpose:** Entry point for the application.
