@@ -1,8 +1,88 @@
-![image](https://github.com/user-attachments/assets/19e87d1f-eaf8-45cd-a47c-c285b30265f1)# WAV to FLAC Converter Service
 
-Welcome to the WAV to FLAC Converter Service! This service allows you to upload a WAV audio file, converts it to FLAC format, and streams it back to you in real-time. It supports WebSocket connections for continuous audio streaming.
+# WAV to FLAC Converter Service
 
----
+This project provides a real-time, WebSocket-based service to convert WAV files to FLAC format. It's designed for streaming and lossless audio conversion, making it suitable for high-fidelity applications.
+
+
+## Overview
+
+This service allows users to upload WAV files, converts them to FLAC format, and streams the output back over WebSocket. The project leverages Go and the Gin framework for routing and WebSocket handling. A Docker container and Kubernetes configurations are included to simplify deployment and scalability.
+
+## Features
+
+- Real-time WAV to FLAC conversion.
+- WebSocket support for continuous streaming.
+- Containerized setup for deployment in any environment.
+- Kubernetes support for horizontal scalability.
+
+## Getting Started
+
+### Prerequisites
+- Go v1.23.2 or later
+- FFmpeg (for audio processing)
+- Docker (for containerization)
+- Kubernetes & Azure CLI (for deployment on AKS)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/wav-to-flac-converter.git
+   cd wav-to-flac-converter
+   ```
+2. Install dependencies:
+   ```bash
+   go mod tidy
+   ```
+
+## Project Structure
+
+```plaintext
+wav-to-flac-converter/
+├── main.go            # Entry point of the application
+├── go.mod             # Go module dependencies
+├── go.sum             # Go dependencies checksums
+├── routes/            # API and WebSocket routes
+│   ├── routes.go      # HTTP routes for the application
+│   └── websocket.go   # WebSocket handlers
+├── services/          # Business logic for audio processing
+│   └── audio.go       # WAV to FLAC conversion functions
+├── Dockerfile         # Dockerfile for containerizing the app
+├── deployment.yaml    # Kubernetes deployment configuration
+├── service.yaml       # Kubernetes service configuration
+└── tests/             # Unit and integration tests
+    ├── audio_test.go  # Tests for audio conversion logic
+    ├── websocket_test.go # Tests for WebSocket functionality
+    ├── BAK.wav        # Sample WAV file for testing
+    └── sample.wav     # Additional sample WAV for testing
+```
+
+## Dependencies
+
+| Dependency             | Description                                                  | Installation                                    |
+|------------------------|--------------------------------------------------------------|-------------------------------------------------|
+| **Gin**                | HTTP framework for Go routing and request handling.          | `go get -u github.com/gin-gonic/gin`            |
+| **WebSocket**          | Library for WebSocket connections for real-time streaming.   | `go get -u github.com/gorilla/websocket`        |
+| **ffmpeg-go**          | Go bindings for FFmpeg, enabling audio file conversion.      | `go get -u github.com/u2takey/ffmpeg-go`        |
+| **Testify**            | Assertion library for testing.                               | `go get -u github.com/stretchr/testify`         |
+
+### Other Requirements
+Ensure the following software is installed on your system:
+- **Go** v1.23.2 (or later)
+- **FFmpeg** (install using `sudo apt-get install ffmpeg` on Linux or `brew install ffmpeg` on macOS)
+
+## Running the Application
+
+1. **Run the Server**  
+   Start the application locally on port 8080:
+   ```bash
+   go run main.go
+   ```
+
+2. **Access the Converter Interface**  
+   Open your browser and go to `http://localhost:8080` to view the interface.
+
+3. **Testing with Sample WAV File**  
+   Upload a sample WAV file (e.g., `BAK.wav`) and click the Convert button to test.
 
 ## Getting Started
 
