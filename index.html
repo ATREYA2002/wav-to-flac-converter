@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV to FLAC Converter</title>
+</head>
+<body>
+    <h1>WAV to FLAC Audio Converter</h1>
+    <input type="file" id="audioFile" accept=".wav">
+    <button id="convertButton">Convert</button>
+    <div id="status"></div>
+    
+    <script>
+        const convertButton = document.getElementById('convertButton');
+        const audioFileInput = document.getElementById('audioFile');
+        const statusDiv = document.getElementById('status');
+        const ws = new WebSocket('ws://localhost:8080/ws'); // Use correct WebSocket URL
+
+        ws.onopen = () => {
+            statusDiv.innerHTML = 'WebSocket connected!';
+            console.log('WebSocket connection established');
+        };
+
+        convertButton.addEventListener('click', () => {
+            const file = audioFileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const audioData = event.target.result;
+                    ws.send(audioData);
+                    statusDiv.innerHTML = 'Converting...';
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        ws.onmessage = (event) => {
+            // Check if the received message is binary data
+            if (event.data instanceof Blob) {
+                const flacData = event.data;
+                const url = URL.createObjectURL(flacData); // Create a blob URL for the FLAC data
+                const a = document.createElement('a'); // Create a temporary anchor element
+                a.href = url; // Set the href to the blob URL
+                a.download = 'converted_audio.flac'; // Set the desired file name
+                document.body.appendChild(a); // Append to body (required for Firefox)
+                a.click(); // Programmatically click the link to trigger the download
+                document.body.removeChild(a); // Clean up by removing the link
+                statusDiv.innerHTML = 'Conversion complete! FLAC data received.';
+                console.log('FLAC data received and ready for download');
+            } else {
+                console.error('Received data is not a Blob');
+                statusDiv.innerHTML = 'Error: Received data is not a valid FLAC file.';
+            }
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        ws.onclose = (event) => {
+            console.log('WebSocket connection closed:', event);
+        };
+    </script>
+</body>
+</html>
