@@ -1,134 +1,163 @@
-1.To get started with your audio streaming service, you first need to download the GitHub repository I created.
-2. Functionality Breakdown
-main.go
-•	Purpose: The main application entry point.
-•	Functionality:
-o	Initializes the web server and router (e.g., using the Gin framework).
-o	Sets up the routes defined in routes/routes.go.
-o	Handles the application’s startup logic and configuration.
-go.mod
-•	Purpose: The go.mod file defines the module and its dependencies.
-•	Functionality:
-o	Lists all required packages and their versions needed for the application to compile and run.
-o	Facilitates dependency management in Go projects.
-go.sum
-•	Purpose: This file contains checksums for the dependencies listed in go.mod.
-•	Functionality:
-o	Ensures the integrity of the dependencies by verifying that they haven't been tampered with.
-o	Automatically updated when dependencies are added or removed.
-routes/
-•	Directory Purpose: Contains route handlers that define the API endpoints for the application.
-•	routes.go:
-o	Functionality:
-	Sets up the API routes for the application (e.g., /convert for file uploads).
-	Defines handlers for incoming HTTP requests and routes them to the appropriate services.
-	Provides basic responses for health checks and service status.
-•	websocket.go:
-o	Functionality:
-	Manages WebSocket connections for real-time audio streaming (if implemented).
-	Defines handlers to accept connections and manage data transmission over WebSocket.
-services/
-•	Directory Purpose: Contains the business logic for the application, specifically related to audio processing.
-•	audio.go:
-o	Functionality:
-	Implements the core logic for converting WAV files to FLAC using a library (e.g., ffmpeg).
-	Provides functions to handle file uploads, conversions, and saving the output.
-	Includes error handling and validation of input files.
-•	BAK.WAV : wav file which we tested locally on our system and convert it to FLAC 
+# WAV to FLAC Converter Service
 
-Dockerfile
-•	Purpose: The Dockerfile is used to build a Docker image for the application.
-•	Functionality:
-o	Defines the base image and environment for running the application (e.g., Golang).
-o	Copies application source files into the container.
-o	Installs necessary dependencies and builds the application.
-o	Specifies the command to run the application when the container starts.
-deployment.yaml
-•	Purpose: This file contains the Kubernetes deployment configuration for the application. It defines how to deploy the application to a Kubernetes cluster.
-•	Functionality:
-o	Specifies the number of replicas to run.
-o	Defines the container image to use, along with its ports and resource limits.
-o	Configures the application to automatically restart if it fails.
-service.yaml
-•	Purpose: This file defines the Kubernetes service configuration for the application.
-•	Functionality:
-o	Specifies how to expose the application to the network (e.g., LoadBalancer, NodePort).
-o	Maps the service to the deployment, allowing access to the application from external sources.
-Tests
-•	tests/audio_test.go: Contains unit tests for the audio conversion logic. It validates the functionality of the methods in services/audio.go to ensure they work as expected.
-•	tests/BAK.wav: A WAV audio file used for testing purposes.
-•	tests/output.flac: The expected output FLAC file generated from converting a specific WAV file, in this case, sample.wav.
-•	tests/sample.wav: A sample WAV audio file used for testing the conversion functionality. It serves as an input for the conversion tests.
-•	tests/websocket_test.go: Contains tests for the WebSocket functionality, ensuring that the WebSocket connections and data streaming work correctly.
-3) Now that you have the WAV file BAK.wav, we can use it to test our Go application
-4) We Make sure your websocket_test.go file sets up a WebSocket connection to the server correctly. This means ensuring the server is running and listening on the correct port (in this case, :8080).
-5) Navigate to Your Project Directory
+Welcome to the WAV to FLAC Converter Service! This service allows you to upload a WAV audio file, converts it to FLAC format, and streams it back to you in real-time. It supports WebSocket connections for continuous audio streaming.
+
+---
+
+## Getting Started
+
+### Step 1: Download the Repository
+Clone this GitHub repository to your local machine:
+
+```bash
+git clone https://github.com/your-username/wav-to-flac-converter.git
+cd wav-to-flac-converter
+```
+
+---
+
+## Functionality Breakdown
+
+### `main.go`
+- **Purpose:** Entry point for the application.
+- **Functionality:**
+  - Initializes the web server and sets up routes using a framework like Gin.
+  - Defines routes in `routes/routes.go`.
+  - Manages startup logic and configuration.
+
+### `go.mod`
+- **Purpose:** Manages dependencies for the application.
+- **Functionality:**
+  - Lists required packages and their versions.
+  - Enables dependency management in Go.
+
+### `go.sum`
+- **Purpose:** Contains checksums for dependencies in `go.mod`.
+- **Functionality:**
+  - Ensures dependency integrity by verifying them against checksums.
+  - Updated automatically when dependencies change.
+
+---
+
+### `routes/`
+- **Directory Purpose:** Manages API endpoints for the application.
+- **Files:**
+  - `routes.go`: Defines API routes (e.g., `/convert` for file uploads), handles HTTP requests, and provides health checks.
+  - `websocket.go`: Manages WebSocket connections, including data transmission for real-time audio streaming.
+
+### `services/`
+- **Directory Purpose:** Contains business logic for audio processing.
+- **Files:**
+  - `audio.go`: Implements WAV to FLAC conversion using libraries like `ffmpeg`, handles file uploads, conversions, and error handling.
+
+### `BAK.wav`
+- **Purpose:** Sample WAV file for local testing.
+
+---
+
+### `Dockerfile`
+- **Purpose:** Defines steps to build a Docker image.
+- **Functionality:**
+  - Specifies the base image, copies source files, installs dependencies, builds the application, and sets the entry command.
+
+### `deployment.yaml`
+- **Purpose:** Kubernetes deployment configuration.
+- **Functionality:**
+  - Defines replicas, container image, ports, and restart policies.
+
+### `service.yaml`
+- **Purpose:** Configures Kubernetes Service.
+- **Functionality:**
+  - Defines network exposure (e.g., LoadBalancer, NodePort) and links the service to the deployment.
+
+---
+
+### Tests
+- `tests/audio_test.go`: Unit tests for audio conversion.
+- `tests/BAK.wav`: WAV file for testing.
+- `tests/output.flac`: Expected output FLAC file generated from `sample.wav`.
+- `tests/sample.wav`: Input WAV file for testing.
+- `tests/websocket_test.go`: Tests WebSocket functionality.
+
+---
+
+## Running the Application Locally
+
+### Step 1: Test the Application with `BAK.wav`
+Place `BAK.wav` in your project directory to test conversion.
+
+### Step 2: Start the Server
+Navigate to your project directory and start the application:
+
+```bash
 cd ~/wav-to-flac-converter
-Run your Go application 
-This command will start your web server, which typically runs on http://localhost:8080 (or another port if configured differently).
 go run main.go
-Run the Tests by opening a second terminal window and navigate to the project directory:
+```
+
+The server will run on `http://localhost:8080`.
+
+### Step 3: Run Tests
+In a second terminal, navigate to the project directory and run tests:
+
+```bash
 cd ~/wav-to-flac-converter
 go test -v ./tests
+```
 
-7) Open your web browser and navigate to http://localhost:8080 to view your converter interface.
+### Step 4: Access the Converter Interface
+Open a browser and navigate to `http://localhost:8080`. Upload a WAV file and test the conversion.
 
-8) Test the Application
-Once you have the page open in your browser, test your WAV to FLAC converter by selecting a WAV file and clicking the convert button. Monitor the status messages to ensure everything is working as intended.
-To make it scalable 
-1)First, create a Dockerfile to containerize your Go application. This enables easy deployment across different environments and facilitates scaling.
- 
-2)Login to docker in our local system and Build Docker image and push it to Docker Desktop 
- 
-Here docker username:pranidock
+---
 
- 
- 
-3)Set Up a Kubernetes Deployment
-With the application containerized, create Kubernetes configuration files to deploy the service on a cluster. Kubernetes Deployment Configuration called deployment.yaml:
- 
+## Deployment and Scalability with Kubernetes and Azure AKS
 
-Set Up a Load Balancer Service
-To expose the WebSocket service outside the Kubernetes cluster, create a Service resource.
-Kubernetes Service Configuration called service.yaml
- 
+### Step 1: Containerize with Docker
+Use Docker to containerize the application. Ensure you have a Docker Hub account (e.g., `docker username: pranidock`).
 
+Build and push the Docker image:
 
-4) Deploy To Kubernetes
- 
+```bash
+docker login
+docker build -t pranidock/wav-to-flac-converter .
+docker push pranidock/wav-to-flac-converter
+```
 
+### Step 2: Kubernetes Deployment
+Create Kubernetes configuration files:
 
-5)Setup Azure CLI and and create azure AKS with my student account
-az aks create --resource-group PranidhanResource --name PraniAKSCluster --node-count 1 --enable-addons monitoring --generate-ssh-keys
-Once the cluster is created, you need to configure your kubectl command-line tool to connect to your new AKS cluster:
-az aks get-credentials --resource-group PranidhanResource --name PraniAKSCluster
+1. **Deployment:** `deployment.yaml` for setting up application replicas.
+2. **Service:** `service.yaml` to expose the WebSocket service.
 
-6) Deploy Your Application
-Now you can proceed with deploying your WAV to FLAC converter application using the deployment.yaml and service.yaml files as described earlier. Make sure to create these files in your working directory and then apply them using the kubectl command.
-kubectl apply -f deployment.yaml // Apply Deployment:
-kubectl apply -f service.yaml // Apply Service:
+### Step 3: Deploy to Azure AKS
+Using your university's free cloud credits, set up an AKS cluster.
 
+1. **Create the AKS cluster:**
+   ```bash
+   az aks create --resource-group PranidhanResource --name PraniAKSCluster --node-count 1 --enable-addons monitoring --generate-ssh-keys
+   ```
 
+2. **Connect `kubectl` to AKS:**
+   ```bash
+   az aks get-credentials --resource-group PranidhanResource --name PraniAKSCluster
+   ```
 
-7)Access your Application
-After deploying, run the following command to get the external IP of your service
-kubectl get services 
-You can access your application by following these methods:
-A. Using a Web Browser
-•	Open your web browser (Chrome, Firefox, etc.).
-•	Enter the external IP address in the address bar:
-Here : http://4.157.225.49
+3. **Deploy the application:**
+   ```bash
+   kubectl apply -f deployment.yaml
+   kubectl apply -f service.yaml
+   ```
 
+### Step 4: Access the Application
+Get the external IP:
 
-With this you can now acces the service from anywhere any system as its hosted on Kubernetes cluster we can do changes and make replicas to scale it too 
+```bash
+kubectl get services
+```
 
+Open your browser and enter the IP address (e.g., `http://4.157.225.49`) to access the service.
 
+---
 
+## Scalable Access and Future Modifications
 
-
-
-
-
-
-
-
+With the application hosted on a Kubernetes cluster, you can scale it by adjusting the replica count in `deployment.yaml`.
