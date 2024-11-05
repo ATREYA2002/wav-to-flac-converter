@@ -254,3 +254,60 @@ Open your browser and enter the IP address (e.g., `http://4.157.225.49`) to acce
 ## Scalable Access and Future Modifications
 
 With the application hosted on a Kubernetes cluster, you can scale it by adjusting the replica count in `deployment.yaml`.
+
+
+
+Here’s how you can document your API endpoints and the WebSocket functionality for your WAV-to-FLAC converter service in the README file. This will provide a comprehensive guide for users and developers to understand how to interact with your application.
+
+## API Documentation
+
+### API Endpoints
+
+#### 1. Health Check Endpoint
+- **Method:** `GET`
+- **Endpoint:** `/`
+- **Description:** Returns a welcome message to confirm the service is running.
+- **Usage:**
+  ```bash
+  curl http://<External-IP>/
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "Welcome to the WAV to FLAC conversion service!"
+  }
+  ```
+
+#### 2. File Conversion Endpoint
+- **Method:** `POST`
+- **Endpoint:** `/convert`
+- **Description:** Accepts a WAV file upload, converts it to FLAC, and returns a downloadable link for the converted file.
+- **Request Body:**
+  - Form-data containing the WAV file.
+- **Usage:**
+  ```bash
+  curl -X POST http://<External-IP>/convert -F 'file=@/path/to/your/file.wav'
+  ```
+- **Response:**
+  Upon successful conversion, the response will include a link to download the converted FLAC file.
+  ```json
+  {
+    "message": "File converted successfully!",
+    "download_link": "http://<External-IP>/path/to/converted/file.flac"
+  }
+  ```
+
+### WebSocket Endpoint
+
+#### Test the WebSocket Endpoint
+- **Method:** `GET`
+- **Endpoint:** `/ws`
+- **Description:** Establishes a WebSocket connection for streaming audio.
+- **Usage:**
+  You can test the WebSocket connection using a tool like `websocat` or any WebSocket client software. Here’s an example using `websocat`:
+  ```bash
+  websocat ws://<External-IP>/ws
+  ```
+
+
+
