@@ -74,7 +74,7 @@ cd wav-to-flac-converter
 
 ---
 
-### Tests
+### `tests/`
 - `tests/audio_test.go`: Unit tests for audio conversion.
 - `tests/BAK.wav`: WAV file for testing.
 - `tests/output.flac`: Expected output FLAC file generated from `sample.wav`.
