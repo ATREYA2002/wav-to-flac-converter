@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wav-to-flac-converter-service
+  labels:
+    app: wav-to-flac-converter
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80            # External port accessible to users
+      targetPort: 8080     # Port on the pod where your app is listening
+      protocol: TCP
+  selector:
+    app: wav-to-flac-converter
+
+
+

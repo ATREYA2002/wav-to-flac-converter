@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wav-to-flac-converter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wav-to-flac-converter
+  template:
+    metadata:
+      labels:
+        app: wav-to-flac-converter
+    spec:
+      containers:
+      - name: wav-to-flac-converter
+        image: pranidock/wav-to-flac-converter:latest
+        ports:
+        - containerPort: 8080

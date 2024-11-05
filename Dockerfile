@@ -1,32 +1,23 @@
-# Use a lightweight base image with Go
-FROM golang:1.16-alpine AS builder
+# Use the official Golang image as a base
+FROM golang:1.23.2
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the Go modules and dependencies files
+# Copy go.mod and go.sum files first to leverage caching
 COPY go.mod go.sum ./
 
-# Download the Go module dependencies
+# Download the dependencies
 RUN go mod download
 
-# Copy the application source code
+# Copy the rest of the application code
 COPY . .
 
 # Build the Go application
-RUN go build -o main .
+RUN go build -o wav-to-flac-converter main.go
 
-# Use a minimal image for production
-FROM alpine:latest
-
-# Set the working directory in the final container
-WORKDIR /root/
-
-# Copy the binary from the builder
-COPY --from=builder /app/main .
-
-# Expose the application's port
+# Expose the port that the service runs on
 EXPOSE 8080
 
-# Run the Go app
-CMD ["./main"]
+# Command to run the application
+CMD ["./wav-to-flac-converter"]
